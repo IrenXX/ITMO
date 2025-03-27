@@ -1,19 +1,21 @@
 package com.springlessons.testproject.dto;
 
-import jakarta.validation.Valid;
+
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import jakarta.validation.constraints.Positive;
 
-@AllArgsConstructor
-@NoArgsConstructor
-public class TechResponseDTO {
-    private Long id;
-    private String techName;
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+public record TechResponseDTO(
+    @Positive
+    @NotNull
+    Long id,
 
-    public TechResponseDTO(@NotNull @NotBlank @NotEmpty String serviceName) {
-    }
-}
+    @NotBlank
+    @NotEmpty
+    String techName
+
+) {}
