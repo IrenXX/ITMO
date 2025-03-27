@@ -8,19 +8,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class TechServices {
 
-    public String update(@Valid TechRequestDTO techRequestDTO) {
-        return "services updated";
+    public TechResponseDTO update(@Valid TechRequestDTO techRequestDTO) {
+        return null;
     }
 
-    public String getById(@Valid Long id) {
-        return "find "+id;
+    public TechResponseDTO getById(@Valid Long id) {
+        return null;
     }
 
-    public String findAllServices() {
-        return "findAllServices";
+    public TechResponseDTO findAllOrders() {
+        return null;
     }
 
-    public String createdTechService() {
-        return "createdTechService";
+    public Long createdOrder(@Valid TechRequestDTO techRequestDTO) {
+        return 1L;
+    }
+
+    public String cancelOrder(Long id) {
+        return "cancelTechService";
     }
 }
