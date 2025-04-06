@@ -1,8 +1,13 @@
 package com.springlessons.testproject.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Builder
@@ -19,15 +24,22 @@ public class Users {
 
     @Column(name = "user_rule")
     @NotNull
-    private String userRule;
+    @Enumerated(EnumType.STRING)
+    private UserRule userRule;
 
-    @Column(name = "user_name")
+    @Column(name = "user_name", unique = true)
+    @NotNull
     private String username;
+
+    @Column(name = "email", unique = true)
+    @Email
+    private String email;
 
     @Column(name = "discount")
     private Double discount;
 
     @Column(name = "user_pass")
+    @NotNull
     private String password;
 //    private String email;
 
