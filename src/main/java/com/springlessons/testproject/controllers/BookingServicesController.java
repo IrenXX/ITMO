@@ -29,7 +29,7 @@ public class BookingServicesController {
 
     private final BookingServices bookingServices;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<?> createdOrder(@RequestBody @Valid BookingRequestDTO bookingRequestDTO) {
         log.info("Services created");
         URI uri = URI.create("api/v1/order/"
@@ -37,8 +37,7 @@ public class BookingServicesController {
         return ResponseEntity.created(uri).build();
     }
 
-    @PutMapping()
-    @ResponseStatus(HttpStatus.OK)
+    @PutMapping
     public BookingResponseDTO updateService(@RequestBody @Valid BookingRequestDTO bookingRequestDTO) {
         return bookingServices.update(bookingRequestDTO);
     }

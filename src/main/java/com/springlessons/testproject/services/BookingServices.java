@@ -7,6 +7,7 @@ import com.springlessons.testproject.exception.BookingException;
 import com.springlessons.testproject.exception.ServiceNotFoundException;
 import com.springlessons.testproject.mapper.BookingMapper;
 import com.springlessons.testproject.model.Booking;
+import com.springlessons.testproject.model.UserRule;
 import com.springlessons.testproject.model.Users;
 import com.springlessons.testproject.repositories.BookingRepository;
 import com.springlessons.testproject.repositories.UsersRepository;
@@ -114,8 +115,8 @@ public class BookingServices {
     }
 
     public Users createOrUpdateOperator(Users operator) {
-        if (!"Оператор".equals(operator.getUserRule())) {
-            operator.setUserRule("Оператор");
+        if (operator.getUserRule() != UserRule.ROLE_OPERATOR) {
+            operator.setUserRule(UserRule.ROLE_OPERATOR);
         }
 
         return usersRepository.save(operator);
