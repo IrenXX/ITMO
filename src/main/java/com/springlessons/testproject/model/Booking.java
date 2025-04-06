@@ -4,32 +4,42 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedDate;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Entity
 @Builder
 @Getter
 @Setter
-@Table(name = "orders")
+@Table(name = "booking")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull
-    @Column(name = "order_name")
-    private String order;
+    @Column(name = "service_type")
+    private String serviceType;
 
     @NotNull
-    @Column(name = "create_date")
+    @Column(name = "booking_time")
     @CreationTimestamp
-    private LocalDateTime createdDate;
+    private LocalDateTime bookingTime;
+
+    @NotNull
+    @Column(name = "discount")
+    private double discount;
 
     @Column(name = "price")
     private Double price;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private Users user;
+
+    @ManyToOne
+    @JoinColumn(name = "operator_id")
+    private Users operator;
 }

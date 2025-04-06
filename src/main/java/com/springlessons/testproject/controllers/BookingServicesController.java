@@ -1,10 +1,10 @@
-package com.springlessons.testproject.controller;
+package com.springlessons.testproject.controllers;
 
-import com.springlessons.testproject.dto.OrderRequestDTO;
-import com.springlessons.testproject.dto.OrderResponseDTO;
+import com.springlessons.testproject.dto.BookingRequestDTO;
+import com.springlessons.testproject.dto.BookingResponseDTO;
 import com.springlessons.testproject.exception.InvalidDateRangeException;
-import com.springlessons.testproject.exception.OrderException;
-import com.springlessons.testproject.services.OrderServices;
+import com.springlessons.testproject.exception.BookingException;
+import com.springlessons.testproject.services.BookingServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,36 +25,36 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-public class OrderServicesController {
+public class BookingServicesController {
 
-    private final OrderServices orderServices;
+    private final BookingServices bookingServices;
 
     @PostMapping()
-    public ResponseEntity<?> createdOrder(@RequestBody @Valid OrderRequestDTO orderRequestDTO) {
+    public ResponseEntity<?> createdOrder(@RequestBody @Valid BookingRequestDTO bookingRequestDTO) {
         log.info("Services created");
         URI uri = URI.create("api/v1/order/"
-                + orderServices.createdOrder(orderRequestDTO));
+                + bookingServices.createdOrder(bookingRequestDTO));
         return ResponseEntity.created(uri).build();
     }
 
     @PutMapping()
     @ResponseStatus(HttpStatus.OK)
-    public OrderResponseDTO updateService(@RequestBody @Valid OrderRequestDTO orderRequestDTO) {
-        return orderServices.update(orderRequestDTO);
+    public BookingResponseDTO updateService(@RequestBody @Valid BookingRequestDTO bookingRequestDTO) {
+        return bookingServices.update(bookingRequestDTO);
     }
 
     @GetMapping(produces = "application/json")
-    public List<OrderResponseDTO> findAllOrders() {
+    public List<BookingResponseDTO> findAllOrders() {
         log.info("Get all Orders");
-        return orderServices.findAllOrders();
+        return bookingServices.findAllOrders();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<OrderResponseDTO> findById(@PathVariable Long id) {
-        log.info("Get Services from Order by ID {}",id);
+    public ResponseEntity<BookingResponseDTO> findById(@PathVariable Long id) {
+        log.info("Get Services from Order by ID {}", id);
         try {
-            return new ResponseEntity<>(orderServices.getById(id), HttpStatus.OK);
-        } catch (OrderException e) {
+            return new ResponseEntity<>(bookingServices.getById(id), HttpStatus.OK);
+        } catch (BookingException e) {
             throw new ResponseStatusException(e.getStatus(), e.getMessage());
         }
     }
@@ -63,7 +63,7 @@ public class OrderServicesController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletedTechService(@RequestParam Long id) {
         log.info("Delete Service by ID {}", id);
-        orderServices.cancelOrder(id);
+        bookingServices.cancelOrder(id);
     }
 
     @GetMapping("/revenue")
@@ -76,7 +76,7 @@ public class OrderServicesController {
             if (startDate.isAfter(endDate)) {
                 throw new InvalidDateRangeException("Start date must be before end date", HttpStatus.FORBIDDEN);
             }
-           return new ResponseEntity<>(orderServices.findByBookingTimeBetween(startDate, endDate), HttpStatus.OK);
+            return new ResponseEntity<>(bookingServices.findByBookingTimeBetween(startDate, endDate), HttpStatus.OK);
 
         } catch (InvalidDateRangeException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
@@ -84,10 +84,10 @@ public class OrderServicesController {
     }
 
     @GetMapping("/by-time")
-    public ResponseEntity<List<OrderResponseDTO>> getByTime(@RequestParam String orderCreate) {
+    public ResponseEntity<List<BookingResponseDTO>> getByTime(@RequestParam String orderCreate) {
         try {
-            return new ResponseEntity<>(orderServices.getByTime(orderCreate), HttpStatus.OK);
-        } catch (OrderException e) {
+            return new ResponseEntity<>(bookingServices.getByTime(orderCreate), HttpStatus.OK);
+        } catch (BookingException e) {
             throw new ResponseStatusException(e.getStatus(), e.getMessage());
         }
     }
