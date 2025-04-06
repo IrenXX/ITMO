@@ -1,5 +1,6 @@
 package com.springlessons.testproject.dto;
 
+
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import jakarta.validation.constraints.NotBlank;
@@ -7,16 +8,17 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public record TechRequestDTO(
-        @NotNull
-        @Positive
-        Long id,
+public record OrderResponseDTO(
+    @Positive
+    @NotNull
+    Long id,
 
-        @NotNull
-        @NotBlank
-        @NotEmpty
-        String serviceName) {
+    @NotBlank
+    @NotEmpty
+    String name,
 
-}
+    @Positive
+    @NotNull
+    Double price
+) {}
